@@ -19,3 +19,9 @@ This document tracks technical concepts, questions, and answers learned througho
 ### 3. File Iteration & Line Tracking in Python
 * **Question:** In `scanner.py`, what does `enumerate(file, start=1)` do when looping through a file?
 * **Answer:** It tracks human-readable line numbers (starting at 1) alongside the text of each line, allowing the scanner to report the exact line number where a secret is detected.
+
+---
+
+### 4. Branching Strategy & Push Protection
+* **Question:** Why do we build new code on a branch like `feature/regex-scanner` and test it first before merging it into `main`?
+* **Answer:** Branching isolates new features and bug fixes from stable production code. It allows developers to test, fix issues (like secret detection/push protection blocks), and review code safely before combining it with the main codebase.
