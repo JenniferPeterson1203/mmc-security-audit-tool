@@ -43,3 +43,9 @@ This document tracks technical concepts, questions, and answers learned througho
 ### 7. Automated Unit Testing (`pytest`)
 * **Question:** What is the purpose of writing unit tests for a security scanning tool, and how does `pytest` help developers build reliable code?
 * **Answer:** Unit tests verify that detection rules, file handling, and exclusion logic work as expected in isolation. They prevent regressions, minimize false alarms, and ensure new code changes do not break existing security controls.
+
+---
+
+### 8. Environment Variable Hygiene
+* **Question:** Why do development teams commit a `.env.template` file to GitHub source control, but NEVER commit a `.env` file?
+* **Answer:** The `.env` file holds real, active configuration values and secrets for a specific environment; committing it introduces severe security risks. A `.env.template` file contains the exact same keys but leaves the sensitive values empty or uses safe placeholders, allowing developers to see required configurations without exposing real credentials.
