@@ -25,3 +25,9 @@ This document tracks technical concepts, questions, and answers learned througho
 ### 4. Branching Strategy & Push Protection
 * **Question:** Why do we build new code on a branch like `feature/regex-scanner` and test it first before merging it into `main`?
 * **Answer:** Branching isolates new features and bug fixes from stable production code. It allows developers to test, fix issues (like secret detection/push protection blocks), and review code safely before combining it with the main codebase.
+
+---
+
+### 5. Recursive Directory Walking & Performance Hygiene
+* **Question:** In Python's `os.walk()`, why do we filter out directories like `venv` and `.git` using `IGNORED_DIRS`?
+* **Answer:** Filtering out `venv/` and `.git/` prevents the scanner from wasting execution time and memory scanning thousands of internal binary, dependency, or version history files. It ensures the tool focuses only on project source code and runs efficiently.
