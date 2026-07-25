@@ -49,3 +49,9 @@ This document tracks technical concepts, questions, and answers learned througho
 ### 8. Environment Variable Hygiene
 * **Question:** Why do development teams commit a `.env.template` file to GitHub source control, but NEVER commit a `.env` file?
 * **Answer:** The `.env` file holds real, active configuration values and secrets for a specific environment; committing it introduces severe security risks. A `.env.template` file contains the exact same keys but leaves the sensitive values empty or uses safe placeholders, allowing developers to see required configurations without exposing real credentials.
+
+---
+
+### 9. Secure Secret Migration & Runtime Resolution (`os.getenv`)
+* **Question:** In secure application design, why is reading secrets at runtime via `os.getenv()` or `python-dotenv` considered vastly superior to declaring credential strings directly in Python source code?
+* **Answer:** Decoupling secrets from source code prevents credentials from ever being tracked in Git history or exposed in public repositories. It enables identical code to run across different environments (development, staging, production) simply by swapping environment configurations without modifying code files.
