@@ -1,0 +1,38 @@
+{
+    "scan_target": "/Users/pursuitadmin/Desktop/Mentor-Me-Collective/Project/mmc-security-audit-tool",
+    "total_findings": 4,
+    "findings": [
+        {
+            "rule_id": "RULE-001",
+            "rule_name": "Slack Incoming Webhook",
+            "severity": "HIGH",
+            "file_path": "./sample_code.py",
+            "line_number": 4,
+            "matched_text": "https://hooks.slack.com/services/DUMMY/TEST/TOKEN123\""
+        },
+        {
+            "rule_id": "RULE-001",
+            "rule_name": "Slack Incoming Webhook",
+            "severity": "HIGH",
+            "file_path": "./sample_code.py",
+            "line_number": 9,
+            "matched_text": "https://hooks.slack.com/services/DUMMY/TEST/TOKEN123\""
+        },
+        {
+            "rule_id": "RULE-002",
+            "rule_name": "AWS Access Key ID",
+            "severity": "CRITICAL",
+            "file_path": "./sample_code.py",
+            "line_number": 10,
+            "matched_text": "AKIAIOSFODNN7EXAMPLE"
+        },
+        {
+            "rule_id": "RULE-003",
+            "rule_name": "Generic API Key",
+            "severity": "HIGH",
+            "file_path": "./sample_code.py",
+            "line_number": 11,
+            "matched_text": "api_key = 'abcdef1234567890abcdef1234567890'"
+        }
+    ]
+}

@@ -1,42 +1,82 @@
+import json
 import os
 import re
 
-# 1. Dictionary of Secret Detection Patterns
+# 1. Pattern Dictionary with Rule IDs and Severities
 RULES = {
-    "Slack Incoming Webhook": r"https://hooks\.slack\.com/services/\S+",
-    "AWS Access Key ID": r"AKIA[0-9A-Z]{16}",
-    "Generic API Key": r"(?i)(api[_-]?key|secret|token)\s*=\s*['\"][A-Za-z0-9_\-]{16,}['\"]"
+    "RULE-001": {
+        "name": "Slack Incoming Webhook",
+        "pattern": r"https://hooks\.slack\.com/services/\S+",
+        "severity": "HIGH"
+    },
+    "RULE-002": {
+        "name": "AWS Access Key ID",
+        "pattern": r"AKIA[0-9A-Z]{16}",
+        "severity": "CRITICAL"
+    },
+    "RULE-003": {
+        "name": "Generic API Key",
+        "pattern": r"(?i)(api[_-]?key|secret|token)\s*=\s*['\"][A-Za-z0-9_\-]{16,}['\"]",
+        "severity": "HIGH"
+    }
 }
 
-# Folders we want to ignore so we don't scan internal binaries or git files
 IGNORED_DIRS = {"venv", ".git", "__pycache__"}
 
 def scan_file(file_path):
-    """Scans an individual file line-by-line against all rules."""
+    """Scans an individual file line-by-line and returns structured finding objects."""
+    findings = []
     try:
         with open(file_path, "r", encoding="utf-8", errors="ignore") as file:
             for line_number, line in enumerate(file, start=1):
-                for rule_name, pattern in RULES.items():
-                    match = re.search(pattern, line)
+                for rule_id, rule_info in RULES.items():
+                    match = re.search(rule_info["pattern"], line)
                     if match:
-                        print(f"🚨 [{rule_name}] DETECTED in {file_path} on line {line_number}!")
-                        print(f"   Matched Text: {match.group()}\n")
+                        finding = {
+                            "rule_id": rule_id,
+                            "rule_name": rule_info["name"],
+                            "severity": rule_info["severity"],
+                            "file_path": file_path,
+                            "line_number": line_number,
+                            "matched_text": match.group()
+                        }
+                        findings.append(finding)
     except Exception as e:
         print(f"Error reading {file_path}: {e}")
+        
+    return findings
 
-def scan_directory(target_dir="."):
-    """Recursively walks through a folder and scans all files."""
-    print(f"🔍 Starting security audit in directory: {os.path.abspath(target_dir)}\n")
+def scan_directory(target_dir=".", output_json="scan_results.json"):
+    """Recursively walks directories, collects findings, and exports a JSON report."""
+    print(f"🔍 Starting security audit in: {os.path.abspath(target_dir)}\n")
+    all_findings = []
     
     for root, dirs, files in os.walk(target_dir):
-        # Skip ignored directories in-place
         dirs[:] = [d for d in dirs if d not in IGNORED_DIRS]
         
         for file in files:
-            # Only scan code/text files, skip python cached files
-            if not file.endswith(".pyc"):
+            if not file.endswith(".pyc") and file != output_json:
                 file_path = os.path.join(root, file)
-                scan_file(file_path)
+                file_findings = scan_file(file_path)
+                all_findings.extend(file_findings)
+
+    # Print summary to terminal
+    print(f"🚨 Audit Complete! Found {len(all_findings)} potential secret leak(s).\n")
+    for item in all_findings:
+        print(f"  [{item['severity']}] {item['rule_name']} (Rule: {item['rule_id']})")
+        print(f"  └─ File: {item['file_path']} | Line: {item['line_number']}\n")
+
+    # Export findings to JSON report
+    report_data = {
+        "scan_target": os.path.abspath(target_dir),
+        "total_findings": len(all_findings),
+        "findings": all_findings
+    }
+    
+    with open(output_json, "w", encoding="utf-8") as f:
+        json.dump(report_data, f, indent=4)
+        
+    print(f"📁 Structured report saved to: {output_json}")
 
 if __name__ == "__main__":
     scan_directory(".")

@@ -31,3 +31,9 @@ This document tracks technical concepts, questions, and answers learned througho
 ### 5. Recursive Directory Walking & Performance Hygiene
 * **Question:** In Python's `os.walk()`, why do we filter out directories like `venv` and `.git` using `IGNORED_DIRS`?
 * **Answer:** Filtering out `venv/` and `.git/` prevents the scanner from wasting execution time and memory scanning thousands of internal binary, dependency, or version history files. It ensures the tool focuses only on project source code and runs efficiently.
+
+---
+
+### 6. Structured Reporting & Data Export (JSON)
+* **Question:** Why do security tools export scan results to a structured format like JSON instead of just printing plain text strings to the terminal screen?
+* **Answer:** Structured JSON formats allow security audit findings to be permanently logged, easily shared, and automatically parsed by other automated systems, security dashboards, or CI/CD pipelines without relying on manual terminal inspection.
