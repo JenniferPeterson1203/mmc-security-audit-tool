@@ -129,6 +129,6 @@ Author: Jennifer Peterson
 
 Program: Mentor Me Collective (MMC) Platform Engineering Residency
 
-Track: Assignment 4 — Secrets & Data-Handling Security Audit Tool
+Track: Secrets & Data-Handling Security Audit Tool
 
 Majors & Specialization: Programming & Software Development | Cybersecurity
