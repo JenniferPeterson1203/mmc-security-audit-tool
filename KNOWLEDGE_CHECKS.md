@@ -37,3 +37,9 @@ This document tracks technical concepts, questions, and answers learned througho
 ### 6. Structured Reporting & Data Export (JSON)
 * **Question:** Why do security tools export scan results to a structured format like JSON instead of just printing plain text strings to the terminal screen?
 * **Answer:** Structured JSON formats allow security audit findings to be permanently logged, easily shared, and automatically parsed by other automated systems, security dashboards, or CI/CD pipelines without relying on manual terminal inspection.
+
+---
+
+### 7. Automated Unit Testing (`pytest`)
+* **Question:** What is the purpose of writing unit tests for a security scanning tool, and how does `pytest` help developers build reliable code?
+* **Answer:** Unit tests verify that detection rules, file handling, and exclusion logic work as expected in isolation. They prevent regressions, minimize false alarms, and ensure new code changes do not break existing security controls.
