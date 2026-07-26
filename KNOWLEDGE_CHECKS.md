@@ -55,3 +55,9 @@ This document tracks technical concepts, questions, and answers learned througho
 ### 9. Secure Secret Migration & Runtime Resolution (`os.getenv`)
 * **Question:** In secure application design, why is reading secrets at runtime via `os.getenv()` or `python-dotenv` considered vastly superior to declaring credential strings directly in Python source code?
 * **Answer:** Decoupling secrets from source code prevents credentials from ever being tracked in Git history or exposed in public repositories. It enables identical code to run across different environments (development, staging, production) simply by swapping environment configurations without modifying code files.
+
+---
+
+### 10. Command-Line Interface (CLI) Customization (`argparse`)
+* **Question:** Why is `argparse` built into developer tools, and what benefit does providing command-line options (like `--path` or `--output`) give to security teams operating in automated CI/CD pipelines?
+* **Answer:** `argparse` allows a script to accept dynamic inputs directly from the terminal without modifying source code. In automated CI/CD pipelines, this enables security teams to dynamically pass arguments (e.g., directing `--path` to specific subfolders or storing `--output` in build artifacts) for scalable, automated security checks.

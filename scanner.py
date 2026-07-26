@@ -1,3 +1,4 @@
+import argparse
 import json
 import os
 import re
@@ -77,6 +78,23 @@ def scan_directory(target_dir=".", output_json="scan_results.json"):
         json.dump(report_data, f, indent=4)
         
     print(f"📁 Structured report saved to: {output_json}")
+    return len(all_findings)
 
 if __name__ == "__main__":
-    scan_directory(".")
+    # Configure Command Line Interface (CLI) arguments
+    parser = argparse.ArgumentParser(
+        description="🛡️ MMC Secrets & Data-Handling Security Audit Tool"
+    )
+    parser.add_argument(
+        "--path", "-p",
+        default=".",
+        help="Target directory path to scan (default: current directory '.')"
+    )
+    parser.add_argument(
+        "--output", "-o",
+        default="scan_results.json",
+        help="JSON report file output destination (default: 'scan_results.json')"
+    )
+    
+    args = parser.parse_args()
+    scan_directory(target_dir=args.path, output_json=args.output)
