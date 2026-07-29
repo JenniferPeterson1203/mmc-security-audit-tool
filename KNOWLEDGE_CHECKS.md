@@ -61,3 +61,9 @@ This document tracks technical concepts, questions, and answers learned througho
 ### 10. Command-Line Interface (CLI) Customization (`argparse`)
 * **Question:** Why is `argparse` built into developer tools, and what benefit does providing command-line options (like `--path` or `--output`) give to security teams operating in automated CI/CD pipelines?
 * **Answer:** `argparse` allows a script to accept dynamic inputs directly from the terminal without modifying source code. In automated CI/CD pipelines, this enables security teams to dynamically pass arguments (e.g., directing `--path` to specific subfolders or storing `--output` in build artifacts) for scalable, automated security checks.
+
+---
+
+### 11. Test Isolation & Mock File Systems (`tmp_path`)
+* **Question:** What are the advantages of using temporary, isolated file directories (such as `pytest`'s `tmp_path` fixture) when running automated tests on code that creates or reads files?
+* **Answer:** Using temporary fixtures prevents unit tests from modifying, cluttering, or deleting real project files. It ensures each test runs in a clean, isolated environment, avoiding side effects between tests and making the test suite idempotent and reliable.
